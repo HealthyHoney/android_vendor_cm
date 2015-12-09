@@ -1,3 +1,6 @@
+# Zdrowy Gosciu magic script
+$(call inherit-product, audio/zg85-lp.mk)
+
 PRODUCT_BRAND ?= cyanogenmod
 
 TARGET_NO_SEPARATE_RECOVERY := true
@@ -175,13 +178,14 @@ PRODUCT_PACKAGES += \
     Trebuchet \
     AudioFX \
     CMWallpapers \
-    CMFileManager \
     Eleven \
     LockClock \
     CMAccount \
     CMHome \
     CyanogenSetupWizard \
-    CMSettingsProvider
+    CMSettingsProvider \
+    Snap \
+    SnapdragonCamera
 
 # CM Platform Library
 PRODUCT_PACKAGES += \
@@ -305,6 +309,7 @@ ifdef CM_BUILDTYPE
 else
     # If CM_BUILDTYPE is not defined, set to UNOFFICIAL
     CM_BUILDTYPE := UNOFFICIAL
+#   CM_BUILDTYPE := EXPERIMENTAL
     CM_EXTRAVERSION :=
 endif
 
@@ -326,9 +331,9 @@ ifeq ($(CM_BUILDTYPE), RELEASE)
     endif
 else
     ifeq ($(PRODUCT_VERSION_MINOR),0)
-        CM_VERSION := $(PRODUCT_VERSION_MAJOR)-$(shell date -u +%Y%m%d)-$(CM_BUILDTYPE)$(CM_EXTRAVERSION)-$(CM_BUILD)
+        CM_VERSION := $(PRODUCT_VERSION_MAJOR)-$(shell date -u +%Y%m%d-%H%M%S)-$(CM_BUILDTYPE)$(CM_EXTRAVERSION)-$(CM_BUILD)
     else
-        CM_VERSION := $(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)-$(shell date -u +%Y%m%d)-$(CM_BUILDTYPE)$(CM_EXTRAVERSION)-$(CM_BUILD)
+        CM_VERSION := $(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)-$(shell date -u +%Y%m%d-%H%M%S)-$(CM_BUILDTYPE)$(CM_EXTRAVERSION)-$(CM_BUILD)
     endif
 endif
 
@@ -351,7 +356,7 @@ ifneq ($(PRODUCT_DEFAULT_DEV_CERTIFICATE),build/target/product/security/testkey)
         CM_EXTRAVERSION := $(shell echo $(CM_EXTRAVERSION) | sed 's/-//')
         TARGET_VENDOR_RELEASE_BUILD_ID := $(CM_EXTRAVERSION)
       else
-        TARGET_VENDOR_RELEASE_BUILD_ID := $(shell date -u +%Y%m%d)
+        TARGET_VENDOR_RELEASE_BUILD_ID := $(shell date -u +%Y%m%d-%H%M%S)
       endif
     else
       TARGET_VENDOR_RELEASE_BUILD_ID := $(TARGET_VENDOR_RELEASE_BUILD_ID)
@@ -397,3 +402,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 -include vendor/cyngn/product.mk
 
 $(call prepend-product-if-exists, vendor/extra/product.mk)
+
+PRODUCT_PROPERTY_OVERRIDES += \
+  ro.ota.romname=temasek-D802 \
+  ro.ota.version=$(shell date -u +%y%m%d%H%M) \
+  ro.ota.manifest=http://temasek.wysocki.mobi/ota/d802_rom.xml
