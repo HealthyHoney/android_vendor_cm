@@ -1,5 +1,5 @@
-# Zdrowy Gosciu magic script
-$(call inherit-product, audio/zg85-lp.mk)
+# Zdrowy Gosciu magic script (audio + boot animation)
+$(call inherit-product-if-exists, audio/zg85-lp.mk)
 
 PRODUCT_BRAND ?= cyanogenmod
 
@@ -168,10 +168,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     OmniSwitch
 
-# Kryten2k35 OTAUpdates
-PRODUCT_PACKAGES += \
-    OTAUpdates
-
 # Custom CM packages
 PRODUCT_PACKAGES += \
     Launcher3 \
@@ -183,9 +179,7 @@ PRODUCT_PACKAGES += \
     CMAccount \
     CMHome \
     CyanogenSetupWizard \
-    CMSettingsProvider \
-    Snap \
-    SnapdragonCamera
+    CMSettingsProvider
 
 # CM Platform Library
 PRODUCT_PACKAGES += \
@@ -309,7 +303,6 @@ ifdef CM_BUILDTYPE
 else
     # If CM_BUILDTYPE is not defined, set to UNOFFICIAL
     CM_BUILDTYPE := UNOFFICIAL
-#   CM_BUILDTYPE := EXPERIMENTAL
     CM_EXTRAVERSION :=
 endif
 
@@ -402,8 +395,3 @@ PRODUCT_PROPERTY_OVERRIDES += \
 -include vendor/cyngn/product.mk
 
 $(call prepend-product-if-exists, vendor/extra/product.mk)
-
-PRODUCT_PROPERTY_OVERRIDES += \
-  ro.ota.romname=temasek-D802 \
-  ro.ota.version=$(shell date -u +%y%m%d%H%M) \
-  ro.ota.manifest=http://temasek.wysocki.mobi/ota/d802_rom.xml
