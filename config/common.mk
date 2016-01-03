@@ -179,7 +179,10 @@ PRODUCT_PACKAGES += \
     CMAccount \
     CMHome \
     CyanogenSetupWizard \
-    CMSettingsProvider
+    CMSettingsProvider \
+    Snap \
+    SnapdragonCamera \
+    OTAUpdates
 
 # CM Platform Library
 PRODUCT_PACKAGES += \
