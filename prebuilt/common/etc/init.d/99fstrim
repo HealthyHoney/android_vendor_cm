@@ -1,6 +1,8 @@
-#!/system/bin/sh 
-
-fstrim -v /system 
-fstrim -v /cache 
-fstrim -v /data 
+#!/system/bin/sh
+if [[ $(date +%u) -gt 5 ]] ; then
+echo "Weekend at work (FS TRIM) !!"
+fstrim -v /system
+fstrim -v /cache
+fstrim -v /data
 sync
+fi
