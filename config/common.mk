@@ -176,7 +176,6 @@ PRODUCT_PACKAGES += \
     CMWallpapers \
     Eleven \
     LockClock \
-    CMAccount \
     CMHome \
     CyanogenSetupWizard \
     CMSettingsProvider
